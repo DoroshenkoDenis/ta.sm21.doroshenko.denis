@@ -28,31 +28,4 @@ public class SetUp {
         driver.quit();
     }
 
-//    @Rule
-//    public TestName testName = new TestName();
-//
-//    public void setDataFull(String userName, String password, String confirmPassword, String email, String role, String testCaseNumber) throws Exception {
-//        RegistrationPage registrationPage = new RegistrationPage(driver);
-//        registrationPage.setUserName(userName);
-//        registrationPage.setPassword(password);
-//        registrationPage.setRepeatPassword(confirmPassword);
-//        registrationPage.setUnmaskPassword();
-//        registrationPage.setEmail(email);
-//        registrationPage.setRole(role);
-//        Screenshot.takeSnapShot(driver, "scrShot/TC" + testCaseNumber + "/" + testName.getMethodName() + "_step1.png");
-//        registrationPage.sentRegistrationData();
-//        Thread.sleep(2000);
-//        Screenshot.takeSnapShot(driver, "scrShot/TC" + testCaseNumber + "/" + testName.getMethodName() + "_step2.png");
-//    }
-//
-//    public void setData(String userName, String password, String email, String role) {
-//        RegistrationPage registrationPage = new RegistrationPage(driver);
-//        registrationPage.openPage("https://inventory.edu-netcracker.com/pages/registration.xhtml");
-//        registrationPage.setUserName(userName);
-//        registrationPage.setPassword(password);
-//        registrationPage.setRepeatPassword(password);
-//        registrationPage.setUnmaskPassword();
-//        registrationPage.setEmail(email);
-//        registrationPage.setRole(role);
-//    }
 }

@@ -3,7 +3,6 @@ package com.nc.edu.ta.doroshenkodenis.pages;
 import org.junit.Assert;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
-import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.ui.Select;
 
 import java.util.Objects;
@@ -59,16 +58,6 @@ public class RegistrationPage extends BasePage {
 
     public boolean getSentEmailNotification() {
         return Objects.equals(driver.findElement(By.cssSelector("[class=\"notification\"]")).getText(), "An email should have been sent to your address. It contains easy instructions to complete your registration");
-    }
-
-    public boolean getTryLaterNotification() {
-        if (driver.findElement(By.name("tryLaterNotification")) != null) ;
-        return true;
-    }
-
-    public boolean getRetryNotification() {
-        if (driver.findElement(By.name("retryNotification")) != null) ;
-        return true;
     }
 
     public boolean getErrorMessage(String message) {
