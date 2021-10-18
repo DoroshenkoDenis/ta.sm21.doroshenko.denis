@@ -10,7 +10,7 @@ import io.cucumber.java.en.Then;
 import io.cucumber.java.en.When;
 import org.junit.Assert;
 
-public class Registration extends SetUp {
+public class RegistrationTest extends SetUp {
 
     @Before("@RegTest")
     public void initialization() {
@@ -68,7 +68,7 @@ public class Registration extends SetUp {
 
     @Then("user should see successful notification on the Login page")
     public void userShouldSeeSuccessfulNotificationOnTheLoginPage() {
-        Assert.assertTrue(loginPage.justRegistered()); ;
+        Assert.assertTrue(loginPage.justRegistered());
     }
 
     @When("user enter Username in the Username field on the Login page")

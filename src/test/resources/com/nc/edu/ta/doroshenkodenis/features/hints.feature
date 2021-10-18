@@ -1,7 +1,7 @@
 Feature: Check hints
 
   @HintsTest
-  Scenario Outline: : Check hints on Registration page
+  Scenario Outline: : Check "<Current>" hints on Registration page
     Given user navigates to registration page by Chrome
     Then the user points the mouse on the hint in the "<Current>" field AND see the "<Text>"
 

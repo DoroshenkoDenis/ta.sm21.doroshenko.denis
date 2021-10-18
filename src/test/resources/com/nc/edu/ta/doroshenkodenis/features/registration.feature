@@ -1,7 +1,7 @@
 Feature: Registration
 
   @RegTest
-  Scenario Outline: : New user registration
+  Scenario Outline: : New user registration with "<Role>" Role
     Given user navigates to registration page by opening Chrome
     When user enter "<Username>" in the Username field
     And user enter "<Password>" in the Password field

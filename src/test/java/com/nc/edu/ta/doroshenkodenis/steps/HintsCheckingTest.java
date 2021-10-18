@@ -7,7 +7,7 @@ import io.cucumber.java.en.Given;
 import io.cucumber.java.en.Then;
 import org.junit.Assert;
 
-public class HintsChecking extends SetUp {
+public class HintsCheckingTest extends SetUp {
 
     @Before("@HintsTest")
     public void initialization() {

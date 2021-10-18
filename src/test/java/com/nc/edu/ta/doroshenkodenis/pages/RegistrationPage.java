@@ -1,5 +1,6 @@
 package com.nc.edu.ta.doroshenkodenis.pages;
 
+import com.nc.edu.ta.doroshenkodenis.helpers.DataGenerator;
 import org.junit.Assert;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
@@ -20,7 +21,7 @@ public class RegistrationPage extends BasePage {
     }
 
     public RegistrationPage checkIsRegPage() {
-        Assert.assertEquals(driver.getCurrentUrl(),REG_URL);
+        Assert.assertEquals(driver.getCurrentUrl(), REG_URL);
         return this;
     }
 
@@ -48,8 +49,12 @@ public class RegistrationPage extends BasePage {
         click(By.name("registerForm:j_idt26"));
     }
 
-    public String getTextFromElementByFieldName(String fieldName){
+    public String getTextFromElementByFieldName(String fieldName) {
         return driver.findElement(By.xpath("//td[text() = '" + fieldName + "']/following-sibling:: td/label")).getAttribute("title");
+    }
+
+    public String getErrorMessageFromElementByFieldName(String fieldName) {
+        return driver.findElement(By.xpath("//td[text() = '" + fieldName + "']/following-sibling:: td/span")).getText();
     }
 
     public void goToLoginPage() {
@@ -60,8 +65,17 @@ public class RegistrationPage extends BasePage {
         return Objects.equals(driver.findElement(By.cssSelector("[class=\"notification\"]")).getText(), "An email should have been sent to your address. It contains easy instructions to complete your registration");
     }
 
-    public boolean getErrorMessage(String message) {
-        return Objects.equals(driver.findElement(By.cssSelector("[class=\"error\"]")).getText(), message);
+
+    public void fillUserNameFieldWithoutParam(String symbol) {
+        if (Objects.equals(symbol, "digit")) {
+            writeText(By.id("registerForm:username"), DataGenerator.getOnlyLetters(6));
+        } else {
+            if (Objects.equals(symbol, "letter")) {
+                writeText(By.id("registerForm:username"), DataGenerator.getOnlyDigits(6));
+            } else {
+                writeText(By.id("registerForm:username"), DataGenerator.getRandomAlphanumeric(6));
+            }
+        }
     }
 
 }
