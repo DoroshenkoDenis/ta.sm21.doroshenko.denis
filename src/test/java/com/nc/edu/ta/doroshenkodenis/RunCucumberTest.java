@@ -1,4 +1,4 @@
-package com.nc.edu.ta.doroshenkodenis.steps;
+package com.nc.edu.ta.doroshenkodenis;
 
 import io.cucumber.junit.Cucumber;
 import io.cucumber.junit.CucumberOptions;
@@ -6,6 +6,6 @@ import org.junit.runner.RunWith;
 
 @RunWith(Cucumber.class)
 @CucumberOptions(features = {"src/test/resources/com/nc/edu/ta/doroshenkodenis/features"},
-        glue = {"com/nc/edu/ta/doroshenkodenis/steps"}, plugin = {"pretty"})
+        glue = {"com/nc/edu/ta/doroshenkodenis/stepdefs"}, plugin = {"pretty"})
 public class RunCucumberTest {
 }

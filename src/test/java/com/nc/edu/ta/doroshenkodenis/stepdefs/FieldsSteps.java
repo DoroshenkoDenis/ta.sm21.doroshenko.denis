@@ -1,33 +1,29 @@
-package com.nc.edu.ta.doroshenkodenis.steps;
+package com.nc.edu.ta.doroshenkodenis.stepdefs;
 
 import com.nc.edu.ta.doroshenkodenis.helpers.DataGenerator;
 import com.nc.edu.ta.doroshenkodenis.pages.SetUp;
 import io.cucumber.java.After;
 import io.cucumber.java.Before;
+import io.cucumber.java.Scenario;
 import io.cucumber.java.en.And;
 import io.cucumber.java.en.Given;
 import io.cucumber.java.en.Then;
 import io.cucumber.java.en.When;
 import org.junit.Assert;
 
-public class RegistrationTest extends SetUp {
+public class FieldsSteps extends SetUp {
 
-    @Before("@RegTest")
+    @Before
     public void initialization() {
         setUpEnvironment();
     }
 
-//    @BeforeStep("@RegTest")
-//    public void beforeStep() {
-//        takeScreenshot();
-//    }
-
-    @After("@RegTest")
-    public void afterScenario() {
+    @After
+    public void afterScenario(Scenario scenario) {
         tearDown();
     }
 
-    @Given("user navigates to registration page by opening Chrome")
+    @Given("user goes to registration page by opening Chrome")
     public void userNavigatesToRegistrationPageByOpeningChrome() {
         regPage
                 .openRegPage()
@@ -35,6 +31,7 @@ public class RegistrationTest extends SetUp {
     }
 
     String generatedUserName;
+
     @When("user enter {string} in the Username field")
     public void userEnterInTheUsernameField(String username) {
         generatedUserName = username + DataGenerator.getRandomAlphanumeric(6);
@@ -91,4 +88,30 @@ public class RegistrationTest extends SetUp {
         startPage.checkLogin(generatedUserName);
     }
 
+    @Then("the user points the mouse on the hint in the {string} field AND see the {string}")
+    public void theUserPointsTheMouseOnTheHintInTheFieldANDSeeThe(String field, String text) {
+        String hintText = regPage.getTextFromElementByFieldName(field);
+        Assert.assertEquals(hintText, text);
+    }
+
+    @When("user fills Username without {string}")
+    public void userFillsUsernameWithout(String symbol) {
+        regPage.fillUserNameFieldWithoutParam(symbol);
+    }
+
+    @Then("user should see error {string} from the {string} field")
+    public void userShouldSeeErrorFromTheField(String notification, String field) {
+        String errNote = regPage.getErrorMessageFromElementByFieldName(field);
+        Assert.assertEquals(notification, errNote);
+    }
+
+    @When("user fills Password with {string}")
+    public void userFillsPasswordWith(String pass) {
+        regPage.setPassword(pass);
+    }
+
+    @And("click Registration button")
+    public void clickRegistrationButton() {
+        regPage.sentRegistrationData();
+    }
 }

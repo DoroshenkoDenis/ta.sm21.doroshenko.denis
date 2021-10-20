@@ -17,11 +17,11 @@ public class SetUp {
     public void setUpEnvironment() {
         WebDriverManager.chromedriver().setup();
         driver = new ChromeDriver();
-        driver.manage().window().setSize(new Dimension(1200,500));
+        driver.manage().window().setSize(new Dimension(950, 500));
         driver.manage().timeouts().implicitlyWait(10, TimeUnit.SECONDS);
-        loginPage = PageFactory.initElements(driver,LoginPage.class);
-        regPage = PageFactory.initElements(driver,RegistrationPage.class);
-        startPage = PageFactory.initElements(driver,StartPage.class);
+        loginPage = PageFactory.initElements(driver, LoginPage.class);
+        regPage = PageFactory.initElements(driver, RegistrationPage.class);
+        startPage = PageFactory.initElements(driver, StartPage.class);
     }
 
     public void tearDown() {
