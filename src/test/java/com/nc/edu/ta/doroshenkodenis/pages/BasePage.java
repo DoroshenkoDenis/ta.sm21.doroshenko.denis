@@ -1,14 +1,11 @@
 package com.nc.edu.ta.doroshenkodenis.pages;
 
-import com.nc.edu.ta.doroshenkodenis.helpers.Screenshot;
 import org.junit.Assert;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
-
-import java.io.File;
 
 public class BasePage {
     public WebDriver driver;

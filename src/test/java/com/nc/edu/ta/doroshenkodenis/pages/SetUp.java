@@ -32,7 +32,7 @@ public class SetUp {
 
     public void getScreenShot(String tcNumber, String testName, String stepName) {
         try{
-            Screenshot.takeSnapShot(driver, "scrShot/TC " + tcNumber + "/" + i + " step " + testName + "_" + stepName + ".png");
+            Screenshot.takeSnapShot(driver, "scrShot/TC " + tcNumber + "/" + i + " " + testName + "_" + stepName + ".png");
             i++;
         } catch(Exception e){
             e.printStackTrace();
