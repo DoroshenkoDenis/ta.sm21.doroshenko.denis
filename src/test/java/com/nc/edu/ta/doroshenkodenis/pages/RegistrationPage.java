@@ -4,6 +4,8 @@ import com.nc.edu.ta.doroshenkodenis.helpers.DataGenerator;
 import org.junit.Assert;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.WebElement;
+import org.openqa.selenium.interactions.Actions;
 import org.openqa.selenium.support.ui.Select;
 
 import java.util.Objects;
@@ -31,6 +33,7 @@ public class RegistrationPage extends BasePage {
 
     public void setPassword(String password) {
         writeText(By.id("registerForm:password"), password);
+        driver.findElement(By.id("registerForm:hide")).click();
     }
 
     public void setConfirmPassword(String password) {
@@ -50,7 +53,9 @@ public class RegistrationPage extends BasePage {
     }
 
     public String getTextFromElementByFieldName(String fieldName) {
-        return driver.findElement(By.xpath("//td[text() = '" + fieldName + "']/following-sibling:: td/label")).getAttribute("title");
+        WebElement webElement = driver.findElement(By.xpath("//td[text() = '" + fieldName + "']/following-sibling:: td/label"));
+        new Actions(driver).moveToElement(webElement).pause(3000).perform();
+        return webElement.getAttribute("title");
     }
 
     public String getErrorMessageFromElementByFieldName(String fieldName) {
