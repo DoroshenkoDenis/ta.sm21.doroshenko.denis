@@ -14,16 +14,20 @@ public class SetUp {
     public RegistrationPage regPage;
     public LoginPage loginPage;
     public StartPage startPage;
+    public InventoryPage inventoryPage;
+    public NavigationTree navigationTree;
     int i = 1;
 
     public void setUpEnvironment() {
         WebDriverManager.chromedriver().setup();
         driver = new ChromeDriver();
-        driver.manage().window().setSize(new Dimension(1100, 500));
+        driver.manage().window().setSize(new Dimension(1050, 1000));
         driver.manage().timeouts().implicitlyWait(10, TimeUnit.SECONDS);
         loginPage = PageFactory.initElements(driver, LoginPage.class);
         regPage = PageFactory.initElements(driver, RegistrationPage.class);
         startPage = PageFactory.initElements(driver, StartPage.class);
+        inventoryPage = PageFactory.initElements(driver, InventoryPage.class);
+        navigationTree = PageFactory.initElements(driver, NavigationTree.class);
     }
 
     public void tearDown() {
@@ -31,10 +35,10 @@ public class SetUp {
     }
 
     public void getScreenShot(String tcNumber, String testName, String stepName) {
-        try{
-            Screenshot.takeSnapShot(driver, "scrShot/TC " + tcNumber + "/" + i + " " + testName + "_" + stepName + ".png");
+        try {
+            Screenshot.takeSnapShot(driver, "scrShot/TC " + tcNumber + "/" + i + " " + testName + " " + stepName + ".png");
             i++;
-        } catch(Exception e){
+        } catch (Exception e) {
             e.printStackTrace();
         }
     }

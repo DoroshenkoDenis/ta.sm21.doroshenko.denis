@@ -24,7 +24,7 @@ public class StepDef extends SetUp {
     }
 
     @Given("user goes to registration page by opening Chrome")
-    public void userNavigatesToRegistrationPageByOpeningChrome() {
+    public void openRegPage() {
         regPage
                 .openRegPage()
                 .checkIsRegPage();
@@ -33,35 +33,35 @@ public class StepDef extends SetUp {
     String generatedUserName;
 
     @When("user enter {string} in the Username field")
-    public void userEnterInTheUsernameField(String username) {
+    public void fillUsername(String username) {
         generatedUserName = username + DataGenerator.getRandomAlphanumeric(6);
         regPage.setUserName(generatedUserName);
     }
 
     @And("user enter {string} in the Password field")
-    public void userEnterInThePasswordField(String pass) {
+    public void fillPassword(String pass) {
         regPage.setPassword(pass);
     }
 
     @And("user enter {string} in the Repeat Password field")
-    public void userEnterInTheRepeatPasswordField(String repeatedPass) {
+    public void confirmPassword(String repeatedPass) {
         regPage.setConfirmPassword(repeatedPass);
     }
 
     @And("user enter {string} in the Email field")
-    public void userEnterInTheEmailField(String email) {
+    public void fillEmail(String email) {
         regPage.setEmail(generatedUserName + email);
     }
 
     @And("user select {string} from Role dropdown")
-    public void userSelectFromRoleDropdown(String role) {
+    public void selectRole(String role) {
         regPage.setRole(role);
         getScreenShot("1", role.replace("/", ""), new Object() {
         }.getClass().getEnclosingMethod().getName());
     }
 
     @And("user press the Registration button")
-    public void userPressTheRegistrationButton() {
+    public void sentRegData() {
         regPage.sentRegistrationData();
     }
 
@@ -73,44 +73,44 @@ public class StepDef extends SetUp {
     }
 
     @When("user enter Username in the Username field on the Login page")
-    public void userEnterUsernameInTheUsernameFieldOnTheLoginPage() {
+    public void fillRegisteredUsername() {
         loginPage.setUserName(generatedUserName);
     }
 
     @And("user enter {string} in the Password field on the Login page")
-    public void userEnterInThePasswordFieldOnTheLoginPage(String pass) {
+    public void fillRegisteredPassword(String pass) {
         loginPage.setPassword(pass);
     }
 
     @And("user with {string} press the Login button")
-    public void userWithPressTheLoginButton(String role) {
+    public void sentLoginData(String role) {
         loginPage.goToStartPage();
         getScreenShot("1", role.replace("/", ""), new Object() {
         }.getClass().getEnclosingMethod().getName());
     }
 
     @Then("user should see the current Username on the Start page")
-    public void userShouldSeeTheCurrentUsernameOnTheStartPage() {
+    public void checkUsernameOnStartPage() {
         startPage.checkLogin(generatedUserName);
     }
 
-    @Then("the user points the mouse on the hint in the {string} field AND see the {string}")
-    public void theUserPointsTheMouseOnTheHintInTheFieldANDSeeThe(String field, String text) {
+    @Then("the user points the mouse on the hint in the {string} field and see the {string}")
+    public void checkHint(String field, String text) {
         String hintText = regPage.getTextFromElementByFieldName(field);
-        getScreenShot("2", field, new Object() {
+        getScreenShot("2", field.replace(":",""), new Object() {
         }.getClass().getEnclosingMethod().getName());
         Assert.assertEquals(hintText, text);
     }
 
     @When("user fills Username without {string}")
-    public void userFillsUsernameWithout(String symbol) {
+    public void fillUsernameWithoutSymbol(String symbol) {
         regPage.fillUserNameFieldWithoutParam(symbol);
         getScreenShot("3", "without" + symbol, new Object() {
         }.getClass().getEnclosingMethod().getName());
     }
 
     @Then("user should see error {string} from the {string} field")
-    public void userShouldSeeErrorFromTheField(String notification, String field) {
+    public void checkUsernameFieldError(String notification, String field) {
         String tcNumber = null;
         if (Objects.equals(field, "Password")) {
             tcNumber = "4";
@@ -125,19 +125,14 @@ public class StepDef extends SetUp {
     }
 
     @When("user fills Password with {string}")
-    public void userFillsPasswordWith(String pass) {
+    public void fillTestPassword(String pass) {
         regPage.setPassword(pass);
         getScreenShot("4", pass, new Object() {
         }.getClass().getEnclosingMethod().getName());
     }
 
-    @And("click Registration button")
-    public void clickRegistrationButton() {
-        regPage.sentRegistrationData();
-    }
-
     @Given("the user goes to login page by opening Chrome")
-    public void theUserGoesToLoginPageByOpeningChrome() {
+    public void openLoginPage() {
         loginPage
                 .openLoginPage()
                 .checkIsLoginPage();
@@ -152,7 +147,7 @@ public class StepDef extends SetUp {
     }
 
     @Then("the user sees the Start page")
-    public void theUserSeesTheStartPage() {
+    public void checkTheStartPage() {
         startPage.checkThePageByTitle("Top");
     }
 
@@ -161,18 +156,100 @@ public class StepDef extends SetUp {
         startPage.checkLogin(username);
     }
 
-    @When("the user points the mouse at Navigation and clicks the {string}")
-    public void theUserPointsTheMouseAtNavigationAndClicksThe(String link) {
-        getScreenShot("5", link, new Object() {
+    @When("the user points the mouse at {string}")
+    public void pointNavigationDropdown(String dropdown) {
+        startPage.showNavigationDropdown();
+        getScreenShot("5", dropdown, new Object() {
         }.getClass().getEnclosingMethod().getName());
-        startPage.getLinkFromNavigationDropDown(link);
+    }
+
+    @And("clicks the {string}")
+    public void clickTheLink(String link) {
+        startPage.openLinkFromNavigationDropDown(link);
         getScreenShot("5", link, new Object() {
         }.getClass().getEnclosingMethod().getName());
     }
 
     @Then("the user should see the current page {string} and {string}")
-    public void theUserShouldSeeTheCurrentPageAnd(String pageTitle, String dispatcher) {
+    public void checkPageByTitle(String pageTitle, String dispatcher) {
         startPage.checkThePageByTitle(pageTitle);
         Assert.assertTrue(startPage.checkThePageDispatcher(dispatcher));
     }
+
+    @And("select {string} Tab")
+    public void selectTab(String tabName) {
+        inventoryPage.selectTabByName(tabName);
+    }
+
+    @And("remove {string} if exists")
+    public void removeObjIfExists(String obj) {
+        inventoryPage.removeObject(obj);
+    }
+
+    @And("creates by {string} button {string} with {string} continent and {string} language")
+    public void createCountry(String btn, String country, String continent, String language) {
+        inventoryPage
+                .createCountry(btn, country, continent, language)
+                .saveCreatedObject();
+        getScreenShot("5", country, new Object() {
+        }.getClass().getEnclosingMethod().getName());
+    }
+
+    @And("creates by {string} button the {string} city with {string} population and regional status {string}")
+    public void createCity(String btn, String city, String population, String status) {
+        inventoryPage
+                .createCity(btn, city, population, status)
+                .saveCreatedObject();
+        getScreenShot("5", city, new Object() {
+        }.getClass().getEnclosingMethod().getName());
+    }
+
+    @And("creates by {string} button the {string} with street {string}, build number {string}, Square {string} and Connection status {string}")
+    public void createBuilding(String btn, String buildingName, String street, String buildingNumber, String square, String connStatus) {
+        inventoryPage
+                .createBuilding(btn, buildingName, street, buildingNumber, square, connStatus)
+                .saveCreatedObject();
+        getScreenShot("5", buildingName, new Object() {
+        }.getClass().getEnclosingMethod().getName());
+    }
+
+    @And("creates by {string} button the {string} floor with {string} square")
+    public void createFloor(String btn, String floor, String square) {
+        inventoryPage
+                .createFloor(btn, floor, square)
+                .saveCreatedObject();
+        getScreenShot("5", "floor#" + floor, new Object() {
+        }.getClass().getEnclosingMethod().getName());
+    }
+
+    @And("creates by {string} button the {string} room with {string} square")
+    public void createRoom(String btn, String roomName, String square) {
+        inventoryPage
+                .createRoom(btn, roomName, square)
+                .saveCreatedObject();
+        getScreenShot("5", roomName, new Object() {
+        }.getClass().getEnclosingMethod().getName());
+    }
+
+    @And("creates by {string} button the {string} rack with width: {string}, length: {string}, height: {string}, {string} physical status")
+    public void createRack(String btn, String rackName, String width, String length, String height, String status) {
+        inventoryPage
+                .createRack(btn, rackName, width, length, height, status)
+                .saveCreatedObject();
+        getScreenShot("5", rackName, new Object() {
+        }.getClass().getEnclosingMethod().getName());
+    }
+
+    @And("creates by {string} button the {string} device with {string} MAC Address, {string} Gb RAM, {string} CPU, {string} IP Address," +
+            " {string} physical status, width: {string}, length: {string}, height: {string}, Located in {string} {string} {string}," +
+            " Network Element:  {string} floor, {string} room, {string} network element")
+    public void createDevice(String btn, String deviceName, String mac, String ram, String cpu, String ip, String status, String width, String length,
+                             String height, String country, String city, String building, String floor, String room, String elementName) {
+        inventoryPage
+                .createDevice(btn, deviceName, mac, ram, cpu, ip, status, length, width, height, country, city, building, floor, room, elementName)
+                .saveCreatedObject();
+        getScreenShot("5", deviceName, new Object() {
+        }.getClass().getEnclosingMethod().getName());
+    }
+
 }

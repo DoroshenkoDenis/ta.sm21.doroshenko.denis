@@ -21,10 +21,11 @@ Feature: Registration page
       | ReadWrite_    | Password1+ | Password1+       | _@testmail.com | Read / Write |
       | ReadOnly_   | Password1+ | Password1+       | .@testmail.com | Read Only    |
 
+#  не могу добиться визуализации подсказок во время теста для получения скриншота
   @HintsTest
   Scenario Outline: : Check "<Current>" hints on Registration page
     Given user goes to registration page by opening Chrome
-    Then the user points the mouse on the hint in the "<Current>" field AND see the "<Text>"
+    Then the user points the mouse on the hint in the "<Current>" field and see the "<Text>"
 
     Examples:
       | Current         | Text                                                                                                                                                              |
@@ -39,7 +40,7 @@ Feature: Registration page
   Scenario Outline: : New user registration without "<symbol>" for the "Username" textbox
     Given user goes to registration page by opening Chrome
     When user fills Username without "<symbol>"
-    And click Registration button
+    And user press the Registration button
     Then user should see error "<notification>" from the "Username" field
     Examples:
       | symbol | notification                               |
@@ -51,7 +52,7 @@ Feature: Registration page
   Scenario Outline: : New user registration with "<password>" for the "Password" textbox
     Given user goes to registration page by opening Chrome
     When user fills Password with "<password>"
-    And click Registration button
+    And user press the Registration button
     Then user should see error "<notification>" from the "Password" field
     Examples:
       | password   | notification                                              |

@@ -5,7 +5,11 @@ import io.cucumber.junit.CucumberOptions;
 import org.junit.runner.RunWith;
 
 @RunWith(Cucumber.class)
-@CucumberOptions(features = {"src/test/resources/com/nc/edu/ta/doroshenkodenis/features"},
-        glue = {"com/nc/edu/ta/doroshenkodenis/stepdefs"}, plugin = {"pretty"})
+@CucumberOptions(
+        features = {"src/test/resources/com/nc/edu/ta/doroshenkodenis/features"},
+        glue = {"com/nc/edu/ta/doroshenkodenis/stepdefs"},
+        plugin = {"pretty"}
+//        , tags = "@ObjectsCreationsTest"
+)
 public class RunCucumberTest {
 }

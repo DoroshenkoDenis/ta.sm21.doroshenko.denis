@@ -7,6 +7,10 @@ import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
 
+import java.util.Iterator;
+import java.util.Objects;
+import java.util.Set;
+
 public class BasePage {
     public WebDriver driver;
     public WebDriverWait wait;
@@ -43,6 +47,20 @@ public class BasePage {
 
     public WebElement findElementById(String id) {
         return driver.findElement(By.id(id));
+    }
+
+
+    public void changeWindow() {
+        String currentHandle = driver.getWindowHandle();
+        Set<String> handles = driver.getWindowHandles();
+        Iterator<String> iter = handles.iterator();
+        String handle;
+        while (iter.hasNext()) {
+            handle = iter.next();
+            if (Objects.equals(currentHandle, handle))
+                continue;
+            driver.switchTo().window(handle);
+        }
     }
 
 }
