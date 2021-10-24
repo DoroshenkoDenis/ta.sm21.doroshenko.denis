@@ -8,7 +8,10 @@ import io.cucumber.java.en.Given;
 import io.cucumber.java.en.Then;
 import io.cucumber.java.en.When;
 import org.junit.Assert;
+import org.openqa.selenium.WebElement;
 
+import java.util.List;
+import java.util.ListIterator;
 import java.util.Objects;
 
 public class StepDef extends SetUp {
@@ -97,7 +100,7 @@ public class StepDef extends SetUp {
     @Then("the user points the mouse on the hint in the {string} field and see the {string}")
     public void checkHint(String field, String text) {
         String hintText = regPage.getTextFromElementByFieldName(field);
-        getScreenShot("2", field.replace(":",""), new Object() {
+        getScreenShot("2", field.replace(":", ""), new Object() {
         }.getClass().getEnclosingMethod().getName());
         Assert.assertEquals(hintText, text);
     }
@@ -250,6 +253,30 @@ public class StepDef extends SetUp {
                 .saveCreatedObject();
         getScreenShot("5", deviceName, new Object() {
         }.getClass().getEnclosingMethod().getName());
+    }
+
+    @When("the user click Search... field and press Enter")
+    public void openSearchPage() {
+        inventoryPage.openSearchPage();
+    }
+
+    @And("fill field with search {string}, select {string} and press Enter")
+    public void searchData(String data, String searchType) {
+        searchPage.searchData(data, searchType);
+    }
+
+    @Then("the user should see result {string}")
+    public void theUserShouldSeeResult(String obj) {
+        ListIterator<WebElement> list = searchPage.getSearchResults().listIterator();
+        boolean check = false;
+        while (list.hasNext()) {
+            WebElement temp = list.next();
+            String text = temp.getText();
+            if (text.equals(obj)) {
+                check = true;
+            }
+        }
+        Assert.assertTrue(check);
     }
 
 }

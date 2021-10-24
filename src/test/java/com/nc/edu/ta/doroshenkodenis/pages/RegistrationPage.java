@@ -62,15 +62,6 @@ public class RegistrationPage extends BasePage {
         return driver.findElement(By.xpath("//td[text() = '" + fieldName + "']/following-sibling:: td/span")).getText();
     }
 
-    public void goToLoginPage() {
-        driver.findElement(By.linkText("Login")).click();
-    }
-
-    public boolean getSentEmailNotification() {
-        return Objects.equals(driver.findElement(By.cssSelector("[class=\"notification\"]")).getText(), "An email should have been sent to your address. It contains easy instructions to complete your registration");
-    }
-
-
     public void fillUserNameFieldWithoutParam(String symbol) {
         if (Objects.equals(symbol, "digit")) {
             writeText(By.id("registerForm:username"), DataGenerator.getOnlyLetters(6));

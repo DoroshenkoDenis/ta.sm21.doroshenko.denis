@@ -16,6 +16,7 @@ public class SetUp {
     public StartPage startPage;
     public InventoryPage inventoryPage;
     public NavigationTree navigationTree;
+    public GenericSearchPage searchPage;
     int i = 1;
 
     public void setUpEnvironment() {
@@ -28,6 +29,7 @@ public class SetUp {
         startPage = PageFactory.initElements(driver, StartPage.class);
         inventoryPage = PageFactory.initElements(driver, InventoryPage.class);
         navigationTree = PageFactory.initElements(driver, NavigationTree.class);
+        searchPage = PageFactory.initElements(driver, GenericSearchPage.class);
     }
 
     public void tearDown() {

@@ -40,3 +40,18 @@ Feature: Start page
     And select "Devices" Tab
     And creates by "Create device" button the "HP Proliant DL380 Gen9" device with "8A:15:CB:C6:56:6F" MAC Address, "128" Gb RAM, "2x3.2 GHz 8-Core Xeon E5-2667v3" CPU, "221.82.218.131" IP Address, "In Service" physical status, width: "679", length: "445", height: "87", Located in "Honduras" "Tegucigalpa" "Torre InterPlaza", Network Element:  "1" floor, "server-room" room, "IP65-12U__Rack" network element
     Then the user should see the current page "HP Proliant DL380 Gen9" and "Top > Inventory > Honduras > Tegucigalpa > Torre InterPlaza > Floor#1 > server-room > IP65-12U__Rack > HP Proliant DL380 Gen9 >"
+
+  @ObjectsSearchTest
+  Scenario Outline: : Search Objects with test data
+    When the user click Search... field and press Enter
+    Then the user should see the current page "Generic Search" and "Top > Generic Search"
+    When fill field with search "<Data>", select "<search type>" and press Enter
+    Then the user should see result "<Object>"
+    Examples:
+      | Data           | search type | Object         |
+      | IP65-12U__Rack | equal       | IP65-12U__Rack |
+      | 12U            | contains    | IP65-12U__Rack |
+      | IP65           | start with  | IP65-12U__Rack |
+      | Rack           | end with    | IP65-12U__Rack |
+
+

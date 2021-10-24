@@ -1,9 +1,6 @@
 package com.nc.edu.ta.doroshenkodenis.pages;
 
-import org.openqa.selenium.By;
-import org.openqa.selenium.NoSuchElementException;
-import org.openqa.selenium.WebDriver;
-import org.openqa.selenium.WebElement;
+import org.openqa.selenium.*;
 import org.openqa.selenium.support.ui.Select;
 
 public class InventoryPage extends BasePage {
@@ -118,4 +115,8 @@ public class InventoryPage extends BasePage {
         driver.findElement(By.xpath("//div[@id='table_data']//tr/th[text()='" + fieldName + "']//following-sibling:: td/a")).click();
     }
 
+    public GenericSearchPage openSearchPage() {
+        driver.findElement(By.xpath("//input[@id='search-text-input']")).sendKeys(Keys.ENTER);
+        return new GenericSearchPage(driver);
+    }
 }
