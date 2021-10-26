@@ -39,7 +39,6 @@ public class BasePage {
 
     //    Write Text in field located By
     public void writeText(By elementBy, String text) {
-        waitVisibility(elementBy);
         WebElement element = driver.findElement(elementBy);
         element.clear();
         element.sendKeys(text);

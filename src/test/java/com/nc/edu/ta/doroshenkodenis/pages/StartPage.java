@@ -24,8 +24,8 @@ public class StartPage extends BasePage {
         Assert.assertEquals(elementText, headTitle);
     }
 
-    public void openLinkFromNavigationDropDown(String link) {
-        driver.findElement(By.xpath("//a[text() = '" + link + "']")).click();
+    public void openLinkFromDropdown(String link) {
+        driver.findElement(By.xpath("//a[contains(text(),'" + link + "')]")).click();
     }
 
     public boolean checkThePageDispatcher(String dispatcher) {
@@ -37,8 +37,13 @@ public class StartPage extends BasePage {
         return stringBuilder.toString().contains(dispatcher);
     }
 
-    public void showNavigationDropdown() {
-        WebElement element = driver.findElement(By.xpath("//a[contains(text(),'Navigation')]"));
+    public void showDropdownList(String dropdown) {
+        WebElement element;
+        if (dropdown.equals("Search")) {
+            element = driver.findElement(By.xpath("//input[@id='search-text-input']"));
+        } else {
+            element = driver.findElement(By.xpath("//a[contains(text(),'" + dropdown + "')]"));
+        }
         new Actions(driver).moveToElement(element).pause(500).perform();
     }
 }

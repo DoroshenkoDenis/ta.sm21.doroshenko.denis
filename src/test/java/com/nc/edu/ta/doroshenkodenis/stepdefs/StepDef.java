@@ -160,15 +160,15 @@ public class StepDef extends SetUp {
     }
 
     @When("the user points the mouse at {string}")
-    public void pointNavigationDropdown(String dropdown) {
-        startPage.showNavigationDropdown();
+    public void pointDropdown(String dropdown) {
+        startPage.showDropdownList(dropdown);
         getScreenShot("5", dropdown, new Object() {
         }.getClass().getEnclosingMethod().getName());
     }
 
     @And("clicks the {string}")
-    public void clickTheLink(String link) {
-        startPage.openLinkFromNavigationDropDown(link);
+    public void clickTheLinkFromDropdown(String link) {
+        startPage.openLinkFromDropdown(link);
         getScreenShot("5", link, new Object() {
         }.getClass().getEnclosingMethod().getName());
     }
@@ -260,9 +260,11 @@ public class StepDef extends SetUp {
         inventoryPage.openSearchPage();
     }
 
-    @And("fill field with search {string}, select {string} and press Enter")
-    public void searchData(String data, String searchType) {
-        searchPage.searchData(data, searchType);
+    @And("the user fills the field with test {string}, sets the {string} of {string}, and press Enter")
+    public void searchData(String data, String searchType, String fieldName) {
+        searchPage
+                .searchData(data, searchType, fieldName)
+                .searchClick();
     }
 
     @Then("the user should see result {string}")
@@ -279,4 +281,21 @@ public class StepDef extends SetUp {
         Assert.assertTrue(check);
     }
 
+    @When("the user fills the fields with test {string} and {string}, sets the {string} of {string}, sets the {string} of {string}," +
+            "sets the {string} of {string}, and press Enter")
+    public void findCountryByLink(String countryName, String lang, String type1, String name, String type2, String continent, String type3, String language) {
+        searchPage.findCountry(countryName, lang, type1, name, type2, continent, type3, language);
+    }
+
+    @When("the user fills the fields with City test {string} and {string}, sets the {string} of {string}, sets the {string} of {string}," +
+            "sets the {string} of {string}, and press Enter")
+    public void findCity(String cityName, String popNumber, String type1, String name, String type2, String population, String type3, String isCenter) {
+        searchPage.findCity(cityName, popNumber, type1, name, type2, population, type3, isCenter);
+    }
+
+    @When("the user fills the fields with Building test {string} and {string}, sets the {string} of {string}, sets the {string} of {string}," +
+            "sets the {string} of {string}, and press Enter")
+    public void findBuilding(String buildingName, String streetName, String type1, String name, String type2, String street, String type3, String isConn) {
+        searchPage.findBuilding(buildingName, streetName, type1, name, type2, street, type3, isConn);
+    }
 }

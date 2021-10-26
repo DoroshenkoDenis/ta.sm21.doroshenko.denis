@@ -8,15 +8,15 @@ Feature: Start page
   @NavigationListTest
   Scenario Outline: : Check the "<Link>"  in the Navigation List
     Given the user is logged in as "Admin_Pro"
-    When the user points the mouse at "Navigation"
+    When the user points the mouse at "<Dropdown>"
     And clicks the "<Link>"
     Then the user should see the current page "<Page>" and "<Page dispatcher>"
     Examples:
-      | Link                  | Page                 | Page dispatcher               |
-      | Inventory             | Inventory            | Top > Inventory >             |
-#      Infrastructure Orders - disabled Тест упадёт
-      | Infrastructure Orders | Inventory Orders     | Top > Infrastructure Orders > |
-      | Tools                 | Administrative tools | Top > Administrative tools >  |
+      | Dropdown   | Link                  | Page                 | Page dispatcher               |
+      | Navigation | Inventory             | Inventory            | Top > Inventory >             |
+#      Infrastructure Orders - disabled --> Тест упадёт
+      | Navigation | Infrastructure Orders | Inventory Orders     | Top > Infrastructure Orders > |
+      | Navigation | Tools                 | Administrative tools | Top > Administrative tools >  |
 
   @ObjectsCreationsTest
   Scenario: : Create Tree of Objects with test data
@@ -45,13 +45,46 @@ Feature: Start page
   Scenario Outline: : Search Objects with test data
     When the user click Search... field and press Enter
     Then the user should see the current page "Generic Search" and "Top > Generic Search"
-    When fill field with search "<Data>", select "<search type>" and press Enter
+    When the user fills the field with test "<data>", sets the "<type>" of "<select>", and press Enter
     Then the user should see result "<Object>"
     Examples:
-      | Data           | search type | Object         |
-      | IP65-12U__Rack | equal       | IP65-12U__Rack |
-      | 12U            | contains    | IP65-12U__Rack |
-      | IP65           | start with  | IP65-12U__Rack |
-      | Rack           | end with    | IP65-12U__Rack |
+      | data           | type       | select | Object         |
+      | IP65-12U__Rack | equal      | Name   | IP65-12U__Rack |
+      | 12U            | contains   | Name   | IP65-12U__Rack |
+      | IP65           | start with | Name   | IP65-12U__Rack |
+      | Rack           | end with   | Name   | IP65-12U__Rack |
 
+  @ObjectsSearchCountryTest
+  Scenario Outline: : Search Country by search-list with test data
+    When the user points the mouse at "<Dropdown>"
+    And clicks the "<Link>"
+    Then the user should see the current page "<Page>" and "<Page dispatcher>"
+    When the user fills the fields with test "<data1>" and "<data2>", sets the "<type1>" of "<select1>", sets the "<type2>" of "<select2>",sets the "<type3>" of "<select3>", and press Enter
+    Then the user should see result "<Object>"
+    Examples:
+      | Dropdown | Link         | Page         | Page dispatcher    | data1    | data2   | type1    | select1 | type2         | select2   | type3    | select3  | Object   |
+      | Search   | Find Country | Find Country | Top > Find Country | Honduras | Spanish | end with | Name    | North America | Continent | contains | Language | Honduras |
+
+  @ObjectsSearchCityTest
+  Scenario Outline: : Search City by search-list with test data
+    When the user points the mouse at "<Dropdown>"
+    And clicks the "<Link>"
+    Then the user should see the current page "<Page>" and "<Page dispatcher>"
+    When the user fills the fields with City test "<data1>" and "<data2>", sets the "<type1>" of "<select1>", sets the "<type2>" of "<select2>",sets the "<type3>" of "<select3>", and press Enter
+    Then the user should see result "<Object>"
+    Examples:
+      | Dropdown | Link      | Page      | Page dispatcher | data1       | data2   | type1      | select1 | type2 | select2    | type3 | select3              | Object      |
+      | Search   | Find City | Find City | Top > Find City | Tegucigalpa | 1682725 | start with | Name    | equal | Population | Yes   | Is a regional center | Tegucigalpa |
+
+
+  @ObjectsSearchBuildingTest
+  Scenario Outline: : Search Building by search-list with test data
+    When the user points the mouse at "<Dropdown>"
+    And clicks the "<Link>"
+    Then the user should see the current page "<Page>" and "<Page dispatcher>"
+    When the user fills the fields with Building test "<data1>" and "<data2>", sets the "<type1>" of "<select1>", sets the "<type2>" of "<select2>",sets the "<type3>" of "<select3>", and press Enter
+    Then the user should see result "<Object>"
+    Examples:
+      | Dropdown | Link          | Page          | Page dispatcher     | data1            | data2                | type1 | select1 | type2 | select2     | type3 | select3      | Object      |
+      | Search   | Find Building | Find Building | Top > Find Building | Torre InterPlaza | Boulevard Juan Pablo | equal | Name    | equal | Street Name | Lit   | Is connected | Torre InterPlaza |
 
