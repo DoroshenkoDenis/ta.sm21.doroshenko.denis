@@ -3,6 +3,7 @@ Feature: Start page
   Background:
     Given the user goes to login page by opening Chrome
     And login with "Admin_Pro" and "Password1+"
+#    And login with "ReadWrite" and "ReadWrite1="
     Then the user sees the Start page
 
   @NavigationListTest
@@ -46,7 +47,7 @@ Feature: Start page
     When the user click Search... field and press Enter
     Then the user should see the current page "Generic Search" and "Top > Generic Search"
     When the user fills the field with test "<data>", sets the "<type>" of "<select>", and press Enter
-    Then the user should see result "<Object>"
+    Then the user should see result as list contained "<Object>" or message "No records found."
     Examples:
       | data           | type       | select | Object         |
       | IP65-12U__Rack | equal      | Name   | IP65-12U__Rack |
@@ -60,7 +61,7 @@ Feature: Start page
     And clicks the "<Link>"
     Then the user should see the current page "<Page>" and "<Page dispatcher>"
     When the user fills the fields with test "<data1>" and "<data2>", sets the "<type1>" of "<select1>", sets the "<type2>" of "<select2>",sets the "<type3>" of "<select3>", and press Enter
-    Then the user should see result "<Object>"
+    Then the user should see result as list contained "<Object>" or message "No records found."
     Examples:
       | Dropdown | Link         | Page         | Page dispatcher    | data1    | data2   | type1    | select1 | type2         | select2   | type3    | select3  | Object   |
       | Search   | Find Country | Find Country | Top > Find Country | Honduras | Spanish | end with | Name    | North America | Continent | contains | Language | Honduras |
@@ -71,11 +72,10 @@ Feature: Start page
     And clicks the "<Link>"
     Then the user should see the current page "<Page>" and "<Page dispatcher>"
     When the user fills the fields with City test "<data1>" and "<data2>", sets the "<type1>" of "<select1>", sets the "<type2>" of "<select2>",sets the "<type3>" of "<select3>", and press Enter
-    Then the user should see result "<Object>"
+    Then the user should see result as list contained "<Object>" or message "No records found."
     Examples:
       | Dropdown | Link      | Page      | Page dispatcher | data1       | data2   | type1      | select1 | type2 | select2    | type3 | select3              | Object      |
       | Search   | Find City | Find City | Top > Find City | Tegucigalpa | 1682725 | start with | Name    | equal | Population | Yes   | Is a regional center | Tegucigalpa |
-
 
   @ObjectsSearchBuildingTest
   Scenario Outline: : Search Building by search-list with test data
@@ -83,8 +83,19 @@ Feature: Start page
     And clicks the "<Link>"
     Then the user should see the current page "<Page>" and "<Page dispatcher>"
     When the user fills the fields with Building test "<data1>" and "<data2>", sets the "<type1>" of "<select1>", sets the "<type2>" of "<select2>",sets the "<type3>" of "<select3>", and press Enter
-    Then the user should see result "<Object>"
+    Then the user should see result as list contained "<Object>" or message "No records found."
     Examples:
-      | Dropdown | Link          | Page          | Page dispatcher     | data1            | data2                | type1 | select1 | type2 | select2     | type3 | select3      | Object      |
-      | Search   | Find Building | Find Building | Top > Find Building | Torre InterPlaza | Boulevard Juan Pablo | equal | Name    | equal | Street Name | Lit   | Is connected | Torre InterPlaza |
+      | Dropdown | Link          | Page          | Page dispatcher     | data1             | data2                | type1 | select1 | type2 | select2     | type3 | select3      | Object            |
+      | Search   | Find Building | Find Building | Top > Find Building | Torre InterPlaza  | Boulevard Juan Pablo | equal | Name    | equal | Street Name | Lit   | Is connected | Torre InterPlaza  |
+      | Search   | Find Building | Find Building | Top > Find Building | Torre InterPlaza1 | Boulevard Juan Pablo | equal | Name    | equal | Street Name | Lit   | Is connected | Torre InterPlaza1 |
 
+  @ImageLinkTest
+  Scenario Outline: : get page by img-link
+    When clicks the image "<Link>"
+    Then the user should see the current page "<Page>" and "<Page dispatcher>"
+    Then the user should see the inventory list contained objects or message "No records found."
+    Examples:
+      | Link                  | Page                  | Page dispatcher               |
+      | Inventory             | Inventory             | Top > Inventory >             |
+#      Infrastructure Orders - disabled --> Тест упадёт
+      | Infrastructure orders | Infrastructure orders | Top > Infrastructure orders > |

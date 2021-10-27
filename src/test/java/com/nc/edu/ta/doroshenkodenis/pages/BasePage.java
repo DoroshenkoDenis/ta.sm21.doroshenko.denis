@@ -8,6 +8,7 @@ import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
 
 import java.util.Iterator;
+import java.util.ListIterator;
 import java.util.Objects;
 import java.util.Set;
 
@@ -27,8 +28,9 @@ public class BasePage {
 
     //    Click Method
     public void click(By elementBy) {
-        waitVisibility(elementBy);
-        driver.findElement(elementBy).click();
+        driver
+                .findElement(elementBy)
+                .click();
     }
 
     //    Is Element Displayed

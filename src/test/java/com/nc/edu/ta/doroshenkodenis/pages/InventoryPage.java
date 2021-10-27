@@ -3,6 +3,8 @@ package com.nc.edu.ta.doroshenkodenis.pages;
 import org.openqa.selenium.*;
 import org.openqa.selenium.support.ui.Select;
 
+import java.util.List;
+
 public class InventoryPage extends BasePage {
     public InventoryPage(WebDriver driver) {
         super(driver);
@@ -119,4 +121,9 @@ public class InventoryPage extends BasePage {
         driver.findElement(By.xpath("//input[@id='search-text-input']")).sendKeys(Keys.ENTER);
         return new GenericSearchPage(driver);
     }
+
+    public List<WebElement> getObjectsList() {
+        return driver.findElements(By.xpath("//div[@id='table_data']//tbody//a"));
+    }
+
 }

@@ -24,8 +24,8 @@ public class StartPage extends BasePage {
         Assert.assertEquals(elementText, headTitle);
     }
 
-    public void openLinkFromDropdown(String link) {
-        driver.findElement(By.xpath("//a[contains(text(),'" + link + "')]")).click();
+    public void openLink(String link) {
+        click(By.xpath("//a[contains(text(),'" + link + "')]"));
     }
 
     public boolean checkThePageDispatcher(String dispatcher) {
@@ -45,5 +45,14 @@ public class StartPage extends BasePage {
             element = driver.findElement(By.xpath("//a[contains(text(),'" + dropdown + "')]"));
         }
         new Actions(driver).moveToElement(element).pause(500).perform();
+    }
+
+    public void clickTheImgLink(String link) {
+        click(By.xpath("//div[@id='" + link.toLowerCase() + "']/a"));
+    }
+
+
+    public String getEmptyMessage() {
+        return driver.findElement(By.xpath("//tr[@class='ui-widget-content ui-datatable-empty-message']/td")).getText();
     }
 }

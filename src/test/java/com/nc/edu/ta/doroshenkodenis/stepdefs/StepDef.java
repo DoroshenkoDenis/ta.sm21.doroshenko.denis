@@ -167,8 +167,8 @@ public class StepDef extends SetUp {
     }
 
     @And("clicks the {string}")
-    public void clickTheLinkFromDropdown(String link) {
-        startPage.openLinkFromDropdown(link);
+    public void clickTheLink(String link) {
+        startPage.openLink(link);
         getScreenShot("5", link, new Object() {
         }.getClass().getEnclosingMethod().getName());
     }
@@ -267,8 +267,8 @@ public class StepDef extends SetUp {
                 .searchClick();
     }
 
-    @Then("the user should see result {string}")
-    public void theUserShouldSeeResult(String obj) {
+    @Then("the user should see result as list contained {string} or message {string}")
+    public void theUserShouldSeeResult(String obj, String message) {
         ListIterator<WebElement> list = searchPage.getSearchResults().listIterator();
         boolean check = false;
         while (list.hasNext()) {
@@ -276,9 +276,13 @@ public class StepDef extends SetUp {
             String text = temp.getText();
             if (text.equals(obj)) {
                 check = true;
+                System.out.println(text);
             }
         }
-        Assert.assertTrue(check);
+        if (!check) {
+            Assert.assertEquals(startPage.getEmptyMessage(), message);
+            System.out.println(startPage.getEmptyMessage());
+        }
     }
 
     @When("the user fills the fields with test {string} and {string}, sets the {string} of {string}, sets the {string} of {string}," +
@@ -298,4 +302,25 @@ public class StepDef extends SetUp {
     public void findBuilding(String buildingName, String streetName, String type1, String name, String type2, String street, String type3, String isConn) {
         searchPage.findBuilding(buildingName, streetName, type1, name, type2, street, type3, isConn);
     }
+
+    @When("clicks the image {string}")
+    public void clicksTheImage(String link) {
+        startPage.clickTheImgLink(link);
+    }
+
+    @Then("the user should see the inventory list contained objects or message {string}")
+    public void chekTheList(String message) {
+        ListIterator<WebElement> list = inventoryPage.getObjectsList().listIterator();
+        if(list.hasNext()){
+            while (list.hasNext()) {
+                WebElement temp = list.next();
+                String text = temp.getText();
+                System.out.println(text);
+            }
+        } else {
+            Assert.assertEquals(startPage.getEmptyMessage(), message);
+            System.out.println(startPage.getEmptyMessage());
+        }
+    }
+
 }
