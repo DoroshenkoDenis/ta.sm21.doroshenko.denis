@@ -4,6 +4,7 @@ import org.openqa.selenium.*;
 import org.openqa.selenium.support.ui.Select;
 
 import java.util.List;
+import java.util.ListIterator;
 
 public class InventoryPage extends BasePage {
     public InventoryPage(WebDriver driver) {
@@ -16,7 +17,9 @@ public class InventoryPage extends BasePage {
     }
 
     public void fillByFieldName(String fieldName, String value) {
-        driver.findElement(By.xpath("//div[@id='table_data']//tr/th[text()='" + fieldName + "']//following-sibling:: td/input")).sendKeys(value);
+        WebElement el = driver.findElement(By.xpath("//div[@id='table_data']//tr/th[text()='" + fieldName + "']//following-sibling:: td/input"));
+        el.clear();
+        el.sendKeys(value);
     }
 
     public void selectInvPageElementByText(String text) {
@@ -25,10 +28,14 @@ public class InventoryPage extends BasePage {
     }
 
     public InventoryPage createCountry(String btn, String country, String continent, String language) {
-        getCreatingTab(btn);
-        fillByFieldName("Name", country);
-        selectInvPageElementByText(continent);
-        fillByFieldName("Language", language);
+        try {
+            driver.findElement(By.xpath("//a[contains(text(),'" + country + "')]")).click();
+        } catch (NoSuchElementException ignored) {
+            getCreatingTab(btn);
+            fillByFieldName("Name", country);
+            selectInvPageElementByText(continent);
+            fillByFieldName("Language", language);
+        }
         return this;
     }
 
@@ -46,8 +53,21 @@ public class InventoryPage extends BasePage {
 
     public void removeObject(String objName) {
         try {
-            driver.findElement(By.xpath("//a[contains(text(),'" + objName + "')]/preceding-sibling:: input[@type='checkbox']")).click();
-            click(By.xpath("//input[@value='Delete']"));
+//            driver.findElement(By.xpath("//a[contains(text(),'" + objName + "')]/preceding-sibling:: input[@type='checkbox']")).click();
+            ListIterator<WebElement> list = driver.findElements(By.xpath("//a[contains(text(),'" + objName + "')]")).listIterator();
+            while (list.hasNext()) {
+                driver.findElement(By.xpath("//a[contains(text(),'" + objName + "')]/preceding-sibling:: input[@type='checkbox']")).click();
+                click(By.xpath("//input[@value='Delete']"));
+            }
+
+        } catch (NoSuchElementException ignored) {
+        }
+    }
+
+
+    public void findObjectFromList(String objName) {
+        try {
+            driver.findElement(By.xpath("//a[contains(text(),'" + objName + "')]")).click();
         } catch (NoSuchElementException ignored) {
         }
     }
@@ -126,4 +146,13 @@ public class InventoryPage extends BasePage {
         return driver.findElements(By.xpath("//div[@id='table_data']//tbody//a"));
     }
 
+    public void editParameter(String parameter, String value) {
+        click(By.xpath("//a[contains(text(),'Edit')]"));
+        fillByFieldName(parameter, value);
+        saveCreatedObject();
+    }
+
+    public String getParam(String param) {
+        return driver.findElement(By.xpath("//div[@id='table_data']//th[text()='" + param + "']/following::td")).getText();
+    }
 }

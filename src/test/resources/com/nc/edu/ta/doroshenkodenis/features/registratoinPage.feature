@@ -16,10 +16,10 @@ Feature: Registration page
     Then user should see the current Username on the Start page
 
     Examples:
-      | Username | Password   | Confirm password | Email          | Role         |
-      | Admin_    | Password1+ | Password1+       | -@testmail.com | Admin        |
-      | ReadWrite_    | Password1+ | Password1+       | _@testmail.com | Read / Write |
-      | ReadOnly_   | Password1+ | Password1+       | .@testmail.com | Read Only    |
+      | Username   | Password   | Confirm password | Email          | Role         |
+      | Admin_     | Password1+ | Password1+       | -@testmail.com | Admin        |
+      | ReadWrite_ | Password1+ | Password1+       | _@testmail.com | Read / Write |
+      | ReadOnly_  | Password1+ | Password1+       | .@testmail.com | Read Only    |
 
 #  не могу добиться визуализации подсказок во время теста для получения скриншота
   @HintsTest

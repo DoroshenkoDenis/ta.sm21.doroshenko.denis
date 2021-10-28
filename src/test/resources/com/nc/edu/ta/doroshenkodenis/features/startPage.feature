@@ -27,7 +27,7 @@ Feature: Start page
     And select "Countries" Tab
 #   Метод удаления при отсутствии элемента выбрасывает игнорируемое исключение, есть небольшая пауза при выполнении кода
     And remove "Honduras" if exists
-    And creates by "Create country" button "Honduras" with "North America" continent and "Spanish" language
+    And creates by "Create country" button "Honduras" with "North America" continent and "Spanish" language if not exists
     And select "Cities" Tab
     And creates by "Create city" button the "Tegucigalpa" city with "1682725" population and regional status "Yes"
     And select "Buildings" Tab
@@ -47,7 +47,7 @@ Feature: Start page
     When the user click Search... field and press Enter
     Then the user should see the current page "Generic Search" and "Top > Generic Search"
     When the user fills the field with test "<data>", sets the "<type>" of "<select>", and press Enter
-    Then the user should see result as list contained "<Object>" or message "No records found."
+    Then the user should see the List of objects "<Object>"
     Examples:
       | data           | type       | select | Object         |
       | IP65-12U__Rack | equal      | Name   | IP65-12U__Rack |
@@ -60,8 +60,8 @@ Feature: Start page
     When the user points the mouse at "<Dropdown>"
     And clicks the "<Link>"
     Then the user should see the current page "<Page>" and "<Page dispatcher>"
-    When the user fills the fields with test "<data1>" and "<data2>", sets the "<type1>" of "<select1>", sets the "<type2>" of "<select2>",sets the "<type3>" of "<select3>", and press Enter
-    Then the user should see result as list contained "<Object>" or message "No records found."
+    When the user fills the fields with test data "<data1>" and "<data2>", sets the "<type1>" of "<select1>", sets the "<type2>" of "<select2>",sets the "<type3>" of "<select3>", and press Enter
+    Then the user should see the List of objects "<Object>"
     Examples:
       | Dropdown | Link         | Page         | Page dispatcher    | data1    | data2   | type1    | select1 | type2         | select2   | type3    | select3  | Object   |
       | Search   | Find Country | Find Country | Top > Find Country | Honduras | Spanish | end with | Name    | North America | Continent | contains | Language | Honduras |
@@ -72,7 +72,7 @@ Feature: Start page
     And clicks the "<Link>"
     Then the user should see the current page "<Page>" and "<Page dispatcher>"
     When the user fills the fields with City test "<data1>" and "<data2>", sets the "<type1>" of "<select1>", sets the "<type2>" of "<select2>",sets the "<type3>" of "<select3>", and press Enter
-    Then the user should see result as list contained "<Object>" or message "No records found."
+    Then the user should see the List of objects "<Object>"
     Examples:
       | Dropdown | Link      | Page      | Page dispatcher | data1       | data2   | type1      | select1 | type2 | select2    | type3 | select3              | Object      |
       | Search   | Find City | Find City | Top > Find City | Tegucigalpa | 1682725 | start with | Name    | equal | Population | Yes   | Is a regional center | Tegucigalpa |
@@ -83,11 +83,10 @@ Feature: Start page
     And clicks the "<Link>"
     Then the user should see the current page "<Page>" and "<Page dispatcher>"
     When the user fills the fields with Building test "<data1>" and "<data2>", sets the "<type1>" of "<select1>", sets the "<type2>" of "<select2>",sets the "<type3>" of "<select3>", and press Enter
-    Then the user should see result as list contained "<Object>" or message "No records found."
+    Then the user should see the List of objects "<Object>"
     Examples:
       | Dropdown | Link          | Page          | Page dispatcher     | data1             | data2                | type1 | select1 | type2 | select2     | type3 | select3      | Object            |
       | Search   | Find Building | Find Building | Top > Find Building | Torre InterPlaza  | Boulevard Juan Pablo | equal | Name    | equal | Street Name | Lit   | Is connected | Torre InterPlaza  |
-      | Search   | Find Building | Find Building | Top > Find Building | Torre InterPlaza1 | Boulevard Juan Pablo | equal | Name    | equal | Street Name | Lit   | Is connected | Torre InterPlaza1 |
 
   @ImageLinkTest
   Scenario Outline: : get page by img-link
@@ -99,3 +98,6 @@ Feature: Start page
       | Inventory             | Inventory             | Top > Inventory >             |
 #      Infrastructure Orders - disabled --> Тест упадёт
       | Infrastructure orders | Infrastructure orders | Top > Infrastructure orders > |
+
+
+

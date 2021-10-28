@@ -189,7 +189,7 @@ public class StepDef extends SetUp {
         inventoryPage.removeObject(obj);
     }
 
-    @And("creates by {string} button {string} with {string} continent and {string} language")
+    @And("creates by {string} button {string} with {string} continent and {string} language if not exists")
     public void createCountry(String btn, String country, String continent, String language) {
         inventoryPage
                 .createCountry(btn, country, continent, language)
@@ -271,27 +271,17 @@ public class StepDef extends SetUp {
         }.getClass().getEnclosingMethod().getName());
     }
 
-    @Then("the user should see result as list contained {string} or message {string}")
-    public void theUserShouldSeeResult(String obj, String message) {
-        ListIterator<WebElement> list = searchPage.getSearchResults().listIterator();
-        boolean check = false;
-        while (list.hasNext()) {
-            WebElement temp = list.next();
+    @Then("the user should see the List of objects {string}")
+    public void theUserShouldSeeResult(String obj) {
+        for (WebElement temp : searchPage.getSearchResults()) {
             String text = temp.getText();
-            if (text.equals(obj)) {
-                check = true;
-                System.out.println(text);
-            }
-        }
-        if (!check) {
-            Assert.assertEquals(startPage.getEmptyMessage(), message);
-            System.out.println(startPage.getEmptyMessage());
+            Assert.assertEquals(text,obj);
         }
         getScreenShot("5", obj, new Object() {
         }.getClass().getEnclosingMethod().getName());
     }
 
-    @When("the user fills the fields with test {string} and {string}, sets the {string} of {string}, sets the {string} of {string}," +
+    @When("the user fills the fields with test data {string} and {string}, sets the {string} of {string}, sets the {string} of {string}," +
             "sets the {string} of {string}, and press Enter")
     public void findCountryByLink(String countryName, String lang, String type1, String name, String type2, String continent, String type3, String language) {
         searchPage.findCountry(countryName, lang, type1, name, type2, continent, type3, language);
@@ -325,7 +315,7 @@ public class StepDef extends SetUp {
     @Then("the user should see the {string} list contained objects or message {string}")
     public void chekTheList(String link, String message) {
         ListIterator<WebElement> list = inventoryPage.getObjectsList().listIterator();
-        if(list.hasNext()){
+        if (list.hasNext()) {
             while (list.hasNext()) {
                 WebElement temp = list.next();
                 String text = temp.getText();
@@ -337,6 +327,39 @@ public class StepDef extends SetUp {
         }
         getScreenShot("5", link, new Object() {
         }.getClass().getEnclosingMethod().getName());
+    }
+
+
+    @And("edit {string} with data {string}")
+    public void edit(String parameter, String value) {
+        inventoryPage.editParameter(parameter, value);
+    }
+
+    @Then("the user should see the parameter {string} such as {string}")
+    public void checkParam(String param, String value) {
+        String actual = inventoryPage.getParam(param);
+        Assert.assertEquals(value, actual);
+    }
+
+    @And("open the result of search")
+    public void openTheSearchResult() {
+        searchPage.clickSearchResult();
+    }
+
+    @And("find {string}")
+    public void findObjFromList(String obj) {
+        inventoryPage.findObjectFromList(obj);
+    }
+
+    @When("the user finds object named {string}")
+    public void findsObjectBySearchField(String obj) {
+        searchPage.searchBySearchField(obj);
+    }
+
+    @Then("the user should see the message {string}")
+    public void theUserShouldSeeTheMessage(String message) {
+        String actual = searchPage.getEmptyMessage();
+        Assert.assertEquals(message, actual);
     }
 
 }

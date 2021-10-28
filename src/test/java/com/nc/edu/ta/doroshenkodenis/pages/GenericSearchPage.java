@@ -1,6 +1,7 @@
 package com.nc.edu.ta.doroshenkodenis.pages;
 
 import org.openqa.selenium.By;
+import org.openqa.selenium.Keys;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 
@@ -63,4 +64,17 @@ public class GenericSearchPage extends BasePage {
         searchClick();
     }
 
+    public void clickSearchResult() {
+        click(By.xpath("//div[@id='table_data_search']//tbody//a"));
+    }
+
+    public void searchBySearchField(String obj) {
+        WebElement searchField = driver.findElement(By.xpath("//input[@placeholder=' Search...']"));
+        searchField.click();
+        searchField.sendKeys(obj, Keys.ENTER);
+    }
+
+    public String getEmptyMessage() {
+        return driver.findElement(By.xpath("//div[@id='table_data_search']//tr[@class='ui-widget-content ui-datatable-empty-message']//td")).getText();
+    }
 }
